@@ -8,6 +8,7 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+ // T.C : O(N) - we iterated the Linked List thrice one to find mid, second to reverse 2nd hald, third to reorder the list, S.C:O(N)
 class Solution {
     public void reorderList(ListNode head) {
         if(head == null || head.next == null || head.next.next == null) return;
