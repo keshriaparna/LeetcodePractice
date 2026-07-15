@@ -31,37 +31,61 @@
 //         return convertArrayListToLinkedList(ans);
 //     }
 // }
+// class Solution {
+//     private ListNode mergeTwoSortedLists(ListNode list1, ListNode list2){
+//         ListNode dummyNode = new ListNode(-1,null);
+//         ListNode temp = dummyNode;
+//         while(list1 != null && list2 != null){
+//             if(list1.val <= list2.val){
+//                 temp.next = list1;
+//                 list1 = list1.next;
+//             }
+//             else{
+//                 temp.next = list2;
+//                 list2 = list2.next;
+//             }
+//             temp = temp.next;
+//         }
+//         if(list1 != null){
+//             temp.next = list1;
+//         }
+//         else{
+//             temp.next = list2;
+//         }
+//         return dummyNode.next;
+//     }
+//     public ListNode mergeKLists(ListNode[] lists) {
+//         if(lists == null || lists.length == 0){
+//             return null;
+//         }
+//         ListNode head = lists[0];
+//         for(int i=1;i<lists.length;i++){
+//             head = mergeTwoSortedLists(head,lists[i]);
+//         }
+//         return head;
+//     }
+// }
+import java.util.AbstractMap;
 class Solution {
-    private ListNode mergeTwoSortedLists(ListNode list1, ListNode list2){
-        ListNode dummyNode = new ListNode(-1,null);
-        ListNode temp = dummyNode;
-        while(list1 != null && list2 != null){
-            if(list1.val <= list2.val){
-                temp.next = list1;
-                list1 = list1.next;
-            }
-            else{
-                temp.next = list2;
-                list2 = list2.next;
-            }
-            temp = temp.next;
-        }
-        if(list1 != null){
-            temp.next = list1;
-        }
-        else{
-            temp.next = list2;
-        }
-        return dummyNode.next;
-    }
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists == null || lists.length == 0){
-            return null;
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(Comparator.comparingInt(node -> node.val));
+        for(ListNode node: lists){
+            if(node != null){
+                pq.add(node);
+            }
         }
-        ListNode head = lists[0];
-        for(int i=1;i<lists.length;i++){
-            head = mergeTwoSortedLists(head,lists[i]);
+       ListNode dummyNode = new ListNode(-1);
+       ListNode temp = dummyNode;
+
+       while(!pq.isEmpty()){
+        ListNode node = pq.poll();
+        temp.next = node;
+        temp = temp.next;
+        
+        if(node.next != null){
+            pq.add(node.next);
         }
-        return head;
+       }
+       return dummyNode.next;
     }
 }
